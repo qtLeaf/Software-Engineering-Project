@@ -1,3 +1,1 @@
-adjust structure.fxml and newScene.fxml (with image area for graph)
-+
-...
+
