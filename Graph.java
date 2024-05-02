@@ -1,35 +1,59 @@
-package it.univr.demo;
+package it.univr.wordautoma;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class Graph {
 
-    private int  nodes;
-
+    //private int nodes;
     private String dotContent;
 
-    public Graph() {
-        String startnode= "q0";
-        dotContent = "graph Example {\n";
-        dotContent += " " + startnode + "[shape= \"circle\"]\n";
-        nodes= 1;
+    private String esistenceCheck;
 
+    String dotFile;
+    String imgFile;
+
+    public Graph(String dotFile, String imgFile) {
+        this.dotFile= "src/main/resources/it/univr/wordautoma/automas/" + dotFile;
+        this.imgFile= "src/main/resources/it/univr/wordautoma/automas/" + imgFile;
+        dotContent = "graph{\n" +
+                "\tnode[fontname=\"Open Sans\", shape=\"circle\"]\n";
     }
 
-    public void Add(){
+    /*public void add() {
         nodes++;
-        String addNode= "q" + nodes;
-        dotContent += " "+ addNode + "[shape= \"circle\"]\n";
+        String addNode = "q" + nodes;
+        dotContent += "\t" + addNode + "\n";
+    }
+     */
+
+    public void addArrow(String node1, String value, String node2) {
+        //rimovere ultima riga
+        esistenceCheck = "\t" + node1 + "--" + node2 + "[label=\"" + value + "\"]\n";
+        if(!dotContent.contains(esistenceCheck)){
+            dotContent= dotContent.replace("}", "");
+            dotContent+= esistenceCheck;
+            close();
+        }
+
+    }//se esiste la non la aggiungo
+
+    public void setNodeFinal(String node){
+        dotContent += "\t" + node + "[shape=\"doublecircle\"]\n";
+
     }
 
-    public void AddArrow(String node1, String value, String node2){
-        nodes++;
-        String addNode= "q" + nodes;
-        dotContent += " " + node1 +"->" + node2 + "[Headlable= " + value + "]\n";
+    public void removeNode(String nodeToRemove) {
+        // Remove the node line
+        dotContent = dotContent.replaceAll("\\b" + nodeToRemove + "\\b.*?;\n", "\n");
+
+        // Remove any edges involving the node being removed
+        dotContent = dotContent.replaceAll("\\s*" + nodeToRemove + "\\s*--\\s*\\w+\\s*\\[.*?\\];?\n", "\n");
+        dotContent = dotContent.replaceAll("\\s*\\w+\\s*--\\s*" + nodeToRemove + "\\s*\\[.*?\\];?\n", "\n");
     }
 
-    public void Close(String dotFile, String imgFile) {
+
+    public void close() {
         dotContent += "}\n";
         try {
             FileWriter writer = new FileWriter(dotFile);
@@ -45,7 +69,7 @@ public class Graph {
         }
     }
 
-    public String ToString(){
+    public String toString() {
         return dotContent;
     }
 }

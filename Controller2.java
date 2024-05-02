@@ -3,7 +3,11 @@ package it.univr.wordautoma;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+
+import java.time.LocalTime;
 
 // Controller for Scene2
 public class Controller2 {
@@ -17,20 +21,27 @@ public class Controller2 {
     @FXML
     private TextField myText;
 
-    public void initialize() {
-        // Clear the focus from the text field initially
-        myText.setFocusTraversable(false);
+    @FXML
+    private ImageView prevImg;
 
-        // Add an event handler to set focus when the text field is clicked
-        myText.setOnMouseClicked(event -> {
-            myText.setFocusTraversable(true);
-            myText.requestFocus();
-        });
+    private final String PATH= "src/main/resources/it/univr/wordautoma/automas/";
+
+    private String nomeFile="graph";//da fixare
+
+    public void initialize() {
+        uploadImage();
     }
 
     // Method to receive data from Scene1Controller
     public void setData(String data) {
 
         dataLabel.setText(data);
+    }
+
+    public void uploadImage() {
+        LocalTime time = LocalTime.now();
+        System.out.println("Current Time: " + time);
+        Image newImage = new Image("file:" + PATH + nomeFile + ".png");
+        prevImg.setImage(newImage);
     }
 }
