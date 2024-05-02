@@ -1,5 +1,6 @@
 package it.univr.wordautoma;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,10 +17,16 @@ public class Controller {
     public Text mainTitle;
 
     @FXML
-    private ComboBox<String> nodeDropdown;
+    public TextArea outputTextArea;
 
     @FXML
-    private ComboBox<String> nodeDropdown2;
+    private TextField promptNode;
+
+    @FXML
+    public TextField promptValue;
+
+    @FXML
+    private TextField promptNode2;
 
     @FXML
     public void onSubmit(javafx.event.ActionEvent event) throws IOException {
@@ -34,9 +41,31 @@ public class Controller {
 
     // Initialize method can be used to pass the stage reference
     public void initialize() {
-        nodeDropdown.setOnAction(event -> nodeDropdown.setDisable(true));
-        nodeDropdown2.setOnAction(event -> nodeDropdown2.setDisable(true));
+        promptNode.setOnAction(event -> promptNode.setDisable(false));
+        promptValue.setOnAction(event -> promptValue.setDisable(false));
+        promptNode2.setOnAction(event -> promptNode2.setDisable(false));
     }
 
+    public void onSubmitLink(ActionEvent event) throws IOException {
+        String selectedNode = promptNode.getText();
+        String selectedValue = promptValue.getText();
+        String selectedNode2 = promptNode2.getText();
+
+        if (selectedNode != null && selectedNode2 != null) {
+            System.out.println("Link submitted between nodes: " + selectedNode +
+                    " and " + selectedNode2);
+            System.out.println("The event was done correctly.");
+            promptNode.clear();
+            promptValue.clear();
+            promptNode2.clear();
+            String newText = "You added: " + selectedNode + " ~ " + selectedValue + " ~ " + selectedNode2 + "\n";
+
+            // Append the new text to the existing text
+            outputTextArea.appendText(newText);
+        } else {
+            System.out.println("Please select a node.");
+        }
+
+    }
 }
 

@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -16,7 +15,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().
                 getResource("structure.fxml")));
         primaryStage.setTitle("JavaFX App with FXML and CSS");
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 800, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().
                 getResource("style.css")).toExternalForm());
         primaryStage.setScene(scene);
