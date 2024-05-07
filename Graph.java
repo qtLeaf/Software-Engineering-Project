@@ -1,7 +1,6 @@
-package it.univr.wordautoma;
+package it.univr.demo;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class Graph {
 
@@ -13,14 +12,25 @@ public class Graph {
     String dotFile;
     String imgFile;
 
-    public Graph(String dotFile, String imgFile) {
-        this.dotFile= "src/main/resources/it/univr/wordautoma/automas/" + dotFile;
-        this.imgFile= "src/main/resources/it/univr/wordautoma/automas/" + imgFile;
-        dotContent = "graph{\n" +
-                "\tnode[fontname=\"Open Sans\", shape=\"circle\"]\n";
+    private final String PATH="src/main/resources/it/univr/demo/automas/";
+
+    public Graph(String fileName) {
+        if(!graphExist(PATH + "filesName.txt", fileName))
+            try {
+                PrintWriter wr= new PrintWriter(PATH + "filesName.txt");
+                wr.println(fileName);
+                dotContent = "graph " + fileName + " {\n" +
+                        "\tnode[fontname=\"Open Sans\", shape=\"circle\"]\n";
+                wr.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        this.dotFile= PATH + fileName + ".dot";
+        this.imgFile= PATH + fileName + ".png";
     }
 
-    /*public void add() {
+    /*
+    public void add() {
         nodes++;
         String addNode = "q" + nodes;
         dotContent += "\t" + addNode + "\n";
@@ -71,5 +81,20 @@ public class Graph {
 
     public String toString() {
         return dotContent;
+    }
+
+
+    public boolean graphExist(String filePath, String fileToFind){
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(fileToFind)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 }
