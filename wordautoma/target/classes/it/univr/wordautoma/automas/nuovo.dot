@@ -1,0 +1,4 @@
+graph nuovo {
+	node[fontname="Open Sans", shape="circle"]
+	io--sono[label="ci "]
+}

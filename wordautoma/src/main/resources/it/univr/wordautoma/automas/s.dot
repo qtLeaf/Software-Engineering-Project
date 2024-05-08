@@ -1,0 +1,4 @@
+graph s {
+	node[fontname="Open Sans", shape="circle"]
+	Ds--sc[label="sc"]
+}
