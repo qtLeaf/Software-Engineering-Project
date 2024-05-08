@@ -1,5 +1,6 @@
 package it.univr.wordautoma;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -48,6 +49,9 @@ public class Controller {
 
     // Initialize method can be used to pass the stage reference
     public void initialize() {
+        /*Platform.runLater(() -> {
+            nomeFile.getText();
+        });*/
         graph= new Graph(nomeFile);//temporaneo
         promptNode.setOnAction(event -> promptNode.setDisable(false));
         promptValue.setOnAction(event -> promptValue.setDisable(false));

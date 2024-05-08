@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().
                 getResource("startScene.fxml")));
-        primaryStage.setTitle("JavaFX App with FXML and CSS");
+        primaryStage.setTitle("Word Automa");
         Scene scene = new Scene(root, 800, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().
                 getResource("style.css")).toExternalForm());
