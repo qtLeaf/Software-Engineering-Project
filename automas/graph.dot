@@ -1,8 +1,0 @@
-graph{
-	node[fontname="Open Sans", shape="circle"]
-	q1--q2[label="aaab"]
-
-	q1--q1[label="cc"]
-
-	q2--q3[label="ee"]
-}
