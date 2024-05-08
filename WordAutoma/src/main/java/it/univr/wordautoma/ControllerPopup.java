@@ -62,7 +62,8 @@ public class ControllerPopup {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
-        alert.setContentText("Please enter only letters (uppercase or lowercase) and numbers with a maximum of 10 characters.");
+        alert.setContentText("Please enter only letters (uppercase or lowercase)" +
+                " and numbers with a maximum of 10 characters.");
         alert.showAndWait();
     }
 

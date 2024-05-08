@@ -1,5 +1,7 @@
 package it.univr.wordautoma;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +26,9 @@ public class ControllerStart {
     public Text mainTitle;
 
     @FXML
-    public ComboBox<String> onSubmitFile;
+    public ComboBox<String> onSubmitFile = new ComboBox<>();
 
-    private final String PATH= "src/main/resources/it/univr/wordautoma/automas/";
+    ObservableList<String> items = FXCollections.observableArrayList();
 
     ControllerPopup popupController;
 
@@ -79,16 +81,28 @@ public class ControllerStart {
     }
 
     @FXML
-    public void onSubmitFile() throws IOException {
-
+    public void viewFile() {
+        onSubmitFile.setItems(items);
+        String PATH = "src/main/resources/it/univr/wordautoma/automas/";
         try (BufferedReader reader = new BufferedReader(new FileReader
-                (PATH + "filesname.txt"))) {
-            while (reader.readLine() != null) {
-                onSubmitFile.getItems().addAll();
+                (PATH + "filesName.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                items.add(line);
             }
+            onActionSubmitFile(line);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void onActionSubmitFile(String nomeFile) {
 
     }
+
+    // Initialize method can be used to pass the stage reference
+    public void initialize() {
+        viewFile();
+    }
+
 }

@@ -6,7 +6,6 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.collections.FXCollections?>
 
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
@@ -14,17 +13,21 @@
     <top>
         <Text fx:id="mainTitle" text="Welcome"/>
     </top>
+
     <center>
+
         <HBox spacing="10" alignment="CENTER">
+
             <Button text="Start new" onAction="#onSubmitStart"/>
             <!-- <Button text="Submit" onAction="#onSubmitFile"/> -->
-            <ComboBox fx:id="onSubmitFile" promptText="Select a File">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                </items>
-            </ComboBox>
-        </HBox>
-    </center>
+            <ComboBox fx:id="onSubmitFile" promptText="Select a File"/>
+                <!--    <items>
+                       <FXCollections fx:factory="observableArrayList">
+                       </FXCollections>
+                   </items>
+               </ComboBox>  -->
+           </HBox>
+
+       </center>
 
 </BorderPane>
