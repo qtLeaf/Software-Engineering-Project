@@ -1,0 +1,142 @@
+package it.univr.wordautoma;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+import java.io.*;
+import java.time.LocalTime;
+import java.util.Objects;
+
+public class Controller {
+
+    @FXML
+    public ComboBox<String> StateInit = new ComboBox<>();
+
+    @FXML
+    public ComboBox<String> StateEnd = new ComboBox<>();
+
+    ObservableList<String> items = FXCollections.observableArrayList();
+
+    private Graph graph;
+
+    @FXML
+    public TextArea outputTextArea;
+
+    @FXML
+    private TextField promptNode;
+
+    @FXML
+    public TextField promptValue;
+
+    @FXML
+    private TextField promptNode2;
+
+    @FXML
+    private ImageView prevImg;
+
+    private final String PATH= "src/main/resources/it/univr/wordautoma/automas/";
+
+    private String nomeFile="graph";//da fixare
+
+    @FXML
+    public void onSubmit(javafx.event.ActionEvent event) throws IOException {// nuova scena
+        // Load new scene
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().
+                getResource("newScene.fxml")));
+
+        // Set the new scene to the stage
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(root);
+    }
+
+    // Initialize method can be used to pass the stage reference
+    public void initialize() {
+        graph = new Graph(nomeFile);//temporaneo
+        promptNode.setOnAction(event -> promptNode.setDisable(false));
+        promptValue.setOnAction(event -> promptValue.setDisable(false));
+        promptNode2.setOnAction(event -> promptNode2.setDisable(false));
+        updateImage();
+    }
+
+    public void onSubmitLink() {
+        String selectedNode = promptNode.getText();
+        String selectedValue = promptValue.getText();
+        String selectedNode2 = promptNode2.getText();
+
+        if (selectedNode != null && selectedNode2 != null) {
+            System.out.println("Link submitted between nodes: " + selectedNode +
+                    " and " + selectedNode2 + " value " + selectedValue);
+            System.out.println("The event was done correctly.");
+            promptNode.clear();
+            promptValue.clear();
+            promptNode2.clear();
+            String newText = "You added: " + selectedNode + " ~ " + selectedValue + " ~ " + selectedNode2 + "\n";
+
+            graph.addArrow(selectedNode, selectedValue, selectedNode2);
+            updateImage();
+            // Append the new text to the existing text
+            outputTextArea.appendText(newText);
+
+            // Call appendNodeToList to add the new nodes to the list
+            appendNodeToList(selectedNode);
+            appendNodeToList(selectedNode2);
+
+        } else {
+            System.out.println("Please select a node.");
+        }
+    }
+
+    @FXML
+    public void viewNode() {
+        StateInit.setItems(items);
+        StateEnd.setItems(items);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(PATH + "nodesName.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                items.add(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void appendNodeToList(String nodeName) {
+        if (!nodeExist(PATH + "nodesName.txt", nodeName)) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH + "nodesName.txt", true))) {
+                writer.write(nodeName + System.lineSeparator());
+                items.add(nodeName); // Add to the list only if it's not already present
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing to the file.");
+            }
+        }
+    }
+
+    public boolean nodeExist(String filePath, String nodeToFind) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(nodeToFind)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    public void updateImage() {
+        LocalTime time = LocalTime.now();
+        System.out.println("Current Time: " + time);
+        Image newImage = new Image("file:" + PATH + nomeFile + ".png");
+        prevImg.setImage(newImage);
+    }
+}
