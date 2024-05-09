@@ -1,4 +1,0 @@
-graph{
-	node[fontname="Open Sans", shape="circle"]
-	a--c[label="bb"]
-}
