@@ -1,0 +1,4 @@
+graph graph {
+	node[fontname="Open Sans", shape="circle"]
+	ciaoo--sd[label="c"]
+}
