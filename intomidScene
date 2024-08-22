@@ -1,3 +1,0 @@
-<ComboBox fx:id="StateInit" promptText="Select init node"/>
-
-<ComboBox fx:id="StateEnd" promptText="Select end node"/>
