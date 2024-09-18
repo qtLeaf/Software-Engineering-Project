@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"it.univr.wordautoma_10","l":"it.univr.wordautoma_10"}];updateSearchResults();
